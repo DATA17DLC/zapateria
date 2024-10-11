@@ -1,10 +1,54 @@
-.gradient-custom {
-    /* fallback for old browsers */
-    background: #6a11cb;
-    
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
-    
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
-    }
+html,
+body {
+  height: 100%;
+  background-image: url(img/background-login1.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center; /* Asegura que la imagen esté centrada */
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.9); /* Fondo blanco semi-transparente */
+  border-radius: 10px; /* Bordes redondeados */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra para resaltar */
+  backdrop-filter: blur(10px); /* Efecto de desenfoque en el fondo */
+  border: 1px solid rgba(255, 255, 255, 0.3); /* Borde tenue */
+}
+
+/* Efecto de foco en los campos de texto */
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+/* Estilos para el input de email */
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interna */
+}
+
+/* Estilos para el input de contraseña */
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Sombra interna */
+}
+
+/* Estilos para el botón de enviar */
+.btn-primary {
+  background-color: #4a90e2;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  color: white;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto hover para el botón */
+.btn-primary:hover {
+  background-color: #357abd;
+}

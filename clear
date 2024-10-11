@@ -1,0 +1,30 @@
+[33mcommit 0101e1b7e38f2c755d35b1d878cab6fb68fb3341[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mjesus-tafur[m[33m, [m[1;31morigin/main[m[33m)[m
+Merge: 3df8afb f54a4d9
+Author: Jesus Tafur <gamerarow123@gmail.com>
+Date:   Tue Oct 8 17:46:25 2024 -0500
+
+    Merge branch 'main' of https://github.com/DATA17DLC/zapateria
+
+[33mcommit 3df8afb8da7bced0c9c5e82a36ae3decddb16be6[m
+Author: Jesus Tafur <gamerarow123@gmail.com>
+Date:   Tue Oct 8 17:43:10 2024 -0500
+
+    styles
+
+[33mcommit f54a4d9dcbe0e00b183d0cddda43579ed8e4c82c[m
+Author: Jesus Tafur <114260015+DATA17DLC@users.noreply.github.com>
+Date:   Tue Oct 8 17:42:28 2024 -0500
+
+    Delete local directory
+
+[33mcommit 2f053233fea486700c07dbd710f432b56387168f[m
+Author: Jesus Tafur <gamerarow123@gmail.com>
+Date:   Tue Oct 8 17:40:43 2024 -0500
+
+    git ignore
+
+[33mcommit fc5c30712aa60d9b4fbdcbc7869b80f868ce9e0f[m
+Author: Jesus Tafur <gamerarow123@gmail.com>
+Date:   Tue Oct 8 17:11:41 2024 -0500
+
+    primer commit
