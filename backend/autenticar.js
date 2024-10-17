@@ -26,9 +26,5 @@ form.addEventListener('submit', function (e) {
         console.error(error.response.data);  // Si ocurre un error
         alert("Login failed: " + error.response.data.detail);
     });
-<<<<<<< HEAD
-    // abrir ventana dashboard si los datos son correctos
-=======
->>>>>>> 6e755babc9a6c84e51be285bf6a1a6b78870dbea
     window.location = "dashboard.html";
 });
