@@ -1,5 +1,3 @@
-// login.js
-
 // Capturar el formulario de login
 const form = document.getElementById('loginForm');
 
@@ -19,12 +17,10 @@ form.addEventListener('submit', function (e) {
     .then(function (response) {
         console.log(response.data);  // Si el login es exitoso
         alert("Login successful!");
-        // Redirigir a otra página si es necesario
-        // window.location = "dashboard.html"; 
+        window.location = "dashboard.html";  // Redirigir a otra página si el login es exitoso
     })
     .catch(function (error) {
         console.error(error.response.data);  // Si ocurre un error
         alert("Login failed: " + error.response.data.detail);
     });
-    window.location = "dashboard.html";
 });
