@@ -1,34 +1,8 @@
-from fastapi import FastAPI, HTTPException
-import pymysql
-from pydantic import BaseModel
-from fastapi.middleware.cors import CORSMiddleware
+from core.connection import *
+from models.productos import Producto
+from models.user import User
+from models.empleados import *
 
-app = FastAPI()
-
-# Configuración del CORS
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"],
-    allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
-)
-
-# Función para configurar la conexión a MySQL
-def connection_mysql():
-    conexion = pymysql.connect(
-        host="localhost",
-        user="root",
-        password="1234",
-        database="zapateria",
-        cursorclass=pymysql.cursors.DictCursor
-    )
-    return conexion
-
-# Definir un modelo para los datos del usuario
-class User(BaseModel):
-    email: str
-    password: str
 
 # Ruta POST para iniciar sesión
 @app.post("/login_users")
@@ -51,6 +25,51 @@ async def login(user: User):
 
             # Si todo es correcto, devolver el mensaje de éxito
             return {"message": "Login successful"}
+
+    except Exception as e:
+        print(f"Error: {e}")  # Imprimir el error en la consola para depurar
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+    finally:
+        connection.close()  # Cerrar la conexión
+
+# Ruta GET para obtener los datos de todos los empleados
+@app.get("/empleados", response_model=List[dict])
+async def empleados():
+    connection = connection_mysql()
+
+    try:
+        with connection.cursor() as cursor:
+            # Consulta SQL para obtener todos los empleados
+            sql = "SELECT id, nombre, apellido, email, telefono FROM empleados"
+            cursor.execute(sql)
+            result = cursor.fetchall()  # Obtener todos los resultados de la consulta
+
+            # Devolver los resultados como JSON (FastAPI lo hace automáticamente)
+            return result
+
+    except Exception as e:
+        print(f"Error: {e}")  # Imprimir el error en la consola para depurar
+        raise HTTPException(status_code=500, detail="Internal server error")
+
+    finally:
+        connection.close()  # Cerrar la conexión
+
+
+# Ruta GET para obtener los datos de todos los productos
+@app.get("/productos", response_model=List[Producto])
+async def obtener_productos():
+    connection = connection_mysql()
+
+    try:
+        with connection.cursor() as cursor:
+            # Consulta SQL para obtener todos los productos
+            sql = "SELECT id, nombre, descripcion, precio, cantidad FROM productos"
+            cursor.execute(sql)
+            result = cursor.fetchall()  # Obtener todos los resultados de la consulta
+
+            # Devolver los resultados como JSON (FastAPI lo hace automáticamente)
+            return result
 
     except Exception as e:
         print(f"Error: {e}")  # Imprimir el error en la consola para depurar
