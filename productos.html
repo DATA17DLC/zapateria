@@ -208,7 +208,14 @@
 
       <! --<canvas class="my-4 w-100" id="myChart" width="900" height="380"></canvas>
 
-      <h2>Empleados</h2>
+      <h2>Productos</h2>
+
+      <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar...">
+        <button onclick="buscarProducto()">Buscar</button>
+        <button class="btn-primary" onclick="mostrarModalAgregar()">Agregar Producto</button>
+      </div>
+      
       <div class="table-responsive small">
         <table class="table table-striped table-sm">
           <thead>
@@ -218,12 +225,82 @@
               <th scope="col">descripcion</th>
               <th scope="col">precio</th>
               <th scope="col">cantidad</th>
+              <th>Acciones</th>
             </tr>
           </thead>
           <tbody id="tabla">
           </tbody>
         </table>
       </div>
+
+      <div id="productoModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="cerrarModal()">&times;</span>
+            <h2 id="modalTitle">Agregar Producto</h2>
+            <form id="productoForm">
+                <div class="form-group">
+                    <label for="nombre">Nombre:</label>
+                    <input type="text" id="nombre" required>
+                </div>
+                <div class="form-group">
+                    <label for="descripcion">Descripcion:</label>
+                    <input type="text" id="descripcion" required>
+                </div>
+                <div class="form-group">
+                  <label for="precio">Precio:</label>
+                  <input type="number" id="precio" step="0.01" required>
+              </div>
+              <div class="form-group">
+                  <label for="cantidad">Cantidad:</label>
+                  <input type="number" id="cantidad" required>
+              </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn-danger" onclick="cerrarModal2()">Cancelar</button>
+                    <button type="submit" class="btn-primary" onclick="agregarProducto()" >Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+        <!-- Modal de edición -->
+        <div id="modalEdicion" class="modal">
+          <div class="modal-content">
+              <h2>Editar Producto</h2>
+              <form id="formEdicion">
+                  <input type="hidden" id="editId">
+                  <div>
+                      <label>Nombre:</label>
+                      <input type="text" id="editNombre">
+                  </div>
+                  <div>
+                      <label>Descripcion:</label>
+                      <input type="text" id="editDescripcion">
+                  </div>
+                  <div>
+                      <label>Precio:</label>
+                      <input type="email" id="editPrecio">
+                  </div>
+                  <div>
+                      <label>Cantidad:</label>
+                      <input type="text" id="editCantidad">
+                  </div>
+                  <button type="button" onclick="guardarCambios()">Guardar</button>
+                  <button type="button" onclick="cerrarModal()">Cancelar</button>
+              </form>
+          </div>
+      </div>
+  
+      <!-- Modal de confirmación para eliminar -->
+      <div id="modalConfirmDelete" class="modal">
+        <div class="modal-confirm">
+            <h3>Confirmar Eliminación</h3>
+            <p>¿Está seguro que desea eliminar este producto?</p>
+            <input type="hidden" id="deleteId">
+            <button onclick="eliminarProducto()">Sí, Eliminar</button>
+            <button onclick="cerrarModalConfirm()">Cancelar</button>
+        </div>
+    </div>
+    
     </main>
   </div>
 </div>

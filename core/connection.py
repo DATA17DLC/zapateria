@@ -2,18 +2,26 @@ from typing import List
 from fastapi import FastAPI, HTTPException
 import pymysql
 from pydantic import BaseModel
+
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
 
-# Configuración del CORS
+# Agregar middleware de CORS
+origins = [
+    "*",  # Para permitir todas las solicitudes (menos recomendado para producción)
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=origins,  # Permitir los orígenes definidos
     allow_credentials=True,
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_methods=["*"],  # Permitir todos los métodos HTTP
+    allow_headers=["*"],  # Permitir todos los encabezados
 )
+
+
 
 # Función para configurar la conexión a MySQL
 def connection_mysql():
@@ -25,3 +33,4 @@ def connection_mysql():
         cursorclass=pymysql.cursors.DictCursor
     )
     return conexion
+
