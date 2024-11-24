@@ -328,3 +328,9 @@ async def actualizar_producto(id: int, producto: Producto_post):
         raise HTTPException(status_code=500, detail="Error interno del servidor")
     finally:
         connection.close()
+    
+from fastapi.responses import Response
+
+@app.get("/favicon.ico")
+async def favicon():
+    return Response(status_code=204)
