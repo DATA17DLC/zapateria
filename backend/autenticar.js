@@ -24,3 +24,24 @@ form.addEventListener('submit', function (e) {
         alert("Login failed: " + error.response.data.detail);
     });
 });
+
+// Hacer la solicitud POST con Axios
+axios.post('http://127.0.0.1:8000/login', {
+    username: username,
+    password: password
+})
+.then(function (response) {
+    const token = response.data.access_token; // Capturar el token
+    console.log("Token generado:", token);  // Imprimir el token en la consola
+    document.body.innerHTML += `<p>Token generado: <strong>${token}</strong></p>`; // Mostrar en el DOM
+    alert("Login successful!");
+    window.location = "dashboard.html";  // Redirigir si es necesario
+})
+.catch(function (error) {
+    console.error(error.response.data);  // Si ocurre un error
+    alert("Login failed: " + error.response.data.detail);
+});
+
+const token = response.data.access_token; // Capturar el token
+console.log("Token generado:", token);  // Imprimir el token en la consola
+document.body.innerHTML += `<p>Token generado: <strong>${token}</strong></p>`; // Mostrar en el DOM

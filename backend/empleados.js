@@ -30,6 +30,26 @@ window.onload = function () {
         });
 }
 
+// Función para iniciar sesión
+async function login(username, password) {
+    const response = await fetch("http://127.0.0.1:8000/login_json", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+    });
+
+    if (response.ok) {
+        const data = await response.json();
+        return data.access_token; // Retorna el token
+    } else {
+        const error = await response.json();
+        throw new Error(error.detail);
+    }
+}
+
+
 function buscar() {
     const input = document.querySelector('.search-input');
     const filter = input.value.toLowerCase();

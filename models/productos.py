@@ -1,8 +1,10 @@
 # Modelo opcional si necesitas validar los datos de empleados
 from typing import Optional, List
+from unittest.mock import Base
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 import pymysql
+
 
 class Producto(BaseModel):
     id: int
@@ -16,3 +18,4 @@ class Producto_post(BaseModel):
     descripcion: str
     precio: float
     cantidad: int
+    

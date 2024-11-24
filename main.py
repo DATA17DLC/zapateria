@@ -3,7 +3,89 @@ from models.productos import *
 from models.user import User
 from models.empleados import *
 
-"################################### CRUD PARA EMPLEADOS #######################################"
+from typing import Annotated
+from fastapi import Depends, FastAPI, HTTPException, status
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
+from jose import jwt
+
+from fastapi.middleware.cors import CORSMiddleware
+
+app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Cambia "*" por los dominios permitidos en producción
+    allow_credentials=True,
+    allow_methods=["*"],  # Permite todos los métodos (POST, GET, OPTIONS, etc.)
+    allow_headers=["*"],  # Permite todos los encabezados
+)
+
+"################################### LOGIN #######################################"
+
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
+class UserLogin(BaseModel):
+    username : str
+    password : str
+
+users = {
+    "admin": {
+        "username": "admin",
+        "email": "admin@gmail.com",
+        "password": "1234"
+    }
+}
+
+# Simula la generación de un token
+def encode_token(payload: dict) -> str:
+    token = jwt.encode(payload, key="secret", algorithm="HS256")
+    return token
+
+def decode_token(token: Annotated[str, Depends(oauth2_scheme)]) -> dict:
+    try:
+        data = jwt.decode(token, key="secret", algorithms="HS256") 
+        return data
+    except jwt.JWTerror as e:
+        raise HTTPException(status_code=401, detail="invalid token")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail="Internal Server Error")
+
+# Ruta de inicio de sesión
+@app.post("/login")
+async def login(form_data: Annotated[OAuth2PasswordRequestForm, Depends()]):
+    # Busca al usuario en el diccionario
+    user = users.get(form_data.username)
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    # Genera el token
+    token = encode_token({"username": user["username"], "email": user["email"]})
+
+    return {"access_token": token, "token_type": "bearer"}
+
+# Ruta de inicio de sesión
+@app.post("/login_json")
+async def login(form_data:UserLogin):
+    # Busca al usuario en el diccionario
+    user = users.get(form_data.username)
+    if not user or form_data.password != user["password"]:
+        raise HTTPException(status_code=404, detail="incorret username or password")
+
+    # Genera el token
+    token = encode_token({"username": user["username"], "email": user["email"]})
+
+    return {"access_token": token, "token_type": "bearer"}
+
+@app.get("/users/profile")
+def profile(my_user: Annotated[dict, Depends(decode_token)]):
+    return my_user
+
+@app.get("/users", dependencies=[Depends(decode_token)])
+def user_list():
+    return users
+"###############################################################################################"
+
 
 # Ruta POST para iniciar sesión
 @app.post("/login_users")
@@ -33,6 +115,8 @@ async def login(user: User):
 
     finally:
         connection.close()  # Cerrar la conexión
+
+"################################### CRUD PARA EMPLEADOS #######################################"
 
 # Ruta GET para obtener los datos de todos los empleados
 @app.get("/empleados", response_model=List[dict])
