@@ -85,7 +85,9 @@ def profile(my_user: Annotated[dict, Depends(decode_token)]):
 def user_list():
     return users
 "###############################################################################################"
-
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to my FastAPI application!"}
 
 # Ruta POST para iniciar sesión
 @app.post("/login_users")
